@@ -1,0 +1,30 @@
+ MySqlConnection connection=new MySqlConnection("server=localhost;port=3306;username=mysql;password=mysql; database=mybd");
+        public void OpenConnection()
+        {
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connection.Open();
+            }
+        }
+        public void CloseConnection()
+        {
+            if (connection.State == System.Data.ConnectionState.Open)
+            {
+                connection.Close();
+            }
+        }
+        public MySqlConnection getConnection()
+        {
+            return connection;
+        }
+
+
+db db = new db();
+            db.OpenConnection();
+            DataTable ProductsTable = new DataTable();
+            MySqlDataAdapter ProductsAdapter = new MySqlDataAdapter();
+            MySqlCommand ProductsCommand = new MySqlCommand("SELECT * FROM `employers`", db.getConnection());
+            EmployerGridView.DataSource = ProductsTable;
+            ProductsAdapter.SelectCommand = ProductsCommand;
+            ProductsAdapter.Fill(ProductsTable);
+            db.CloseConnection();
